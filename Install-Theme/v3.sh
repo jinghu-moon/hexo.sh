@@ -44,7 +44,7 @@ asyncCommand() {
   trap - EXIT
   wait $pid
 }
-
+clear
 checkEnv
 # 获取博客已有主题数量
 if [ "$(find themes/ -mindepth 1 -maxdepth 1 -type d | wc -l) " -ge 2 ]; then
@@ -82,9 +82,9 @@ while true; do
     echo -ne "输入${red}为空${reset}, 请重新输入: "
     continue
   fi
-  # 检查主题是否已安装
   if [ -d "themes/$themeName" ]; then
     echo -ne "主题${red}已存在${reset}, 请重新输入: "
+    continue
   fi
   if [ "$themeName" == 0 ]; then
     echo -e "${green}[1]${reset} AnZhiYu  : 安知鱼主题, 这是一个简洁美丽的 Hexo 主题"
@@ -148,6 +148,7 @@ if [[ ! $maxThemeSearchNum == 3 ]]; then
     fi
   done
 fi
+
 asyncCommand "git clone $matchLink" "下载主题中"
 result=$?
 if [[ $result == 0 ]]; then
